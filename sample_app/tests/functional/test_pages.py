@@ -8,15 +8,17 @@ def have_tag(response, tag, content):
     return elt is not None and elt.encodeContents() == content
 
 class TestPagesController(TestController):
+    # A little constant to reduce repetition in the test cases below
+    title_prefix = "Ruby on Rails Tutorial Sample App | "
 
     def test_home(self):
         response = self.app.get(url(controller='pages', action='home'))
-        assert have_tag(response, "title", "Ruby on Rails Tutorial Sample App | Home")
+        assert have_tag(response, "title", self.title_prefix+"Home")
 
     def test_contact(self):
         response = self.app.get(url(controller='pages', action='contact'))
-        assert have_tag(response, "title", "Ruby on Rails Tutorial Sample App | Contact")
+        assert have_tag(response, "title", self.title_prefix+"Contact")
 
     def test_about(self):
         response = self.app.get(url(controller='pages', action='about'))
-        assert have_tag(response, "title", "Ruby on Rails Tutorial Sample App | About")
+        assert have_tag(response, "title", self.title_prefix+"About")
