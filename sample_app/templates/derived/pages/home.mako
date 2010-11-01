@@ -6,3 +6,5 @@
   <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
   sample application.
 </p>
+
+${h.link_to("Sign up now!", "#", class_="signup_button round")}

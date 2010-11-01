@@ -3,10 +3,19 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>${h.title()}</title>
-    ${h.stylesheet_link('/stylesheets/blueprint/screen.css', media='screen') }
-    ${h.stylesheet_link('/stylesheets/blueprint/print.css', media='print') }
+    ${stylesheets.body()}
   </head>
   <body>
-    ${self.body()}
+    <div class="container">
+      ${header.body()}
+      <div id="content" class="round">
+        ${self.body()}
+      </div>
+      ${footer.body()}
+    </div>
   </body>
 </html>
+
+<%namespace name="stylesheets" file="/layouts/stylesheets.mako" />
+<%namespace name="header" file="/layouts/header.mako" />
+<%namespace name="footer" file="/layouts/footer.mako" />
