@@ -10,7 +10,13 @@ log = logging.getLogger(__name__)
 class PagesController(BaseController):
 
     def home(self):
+        c.title = "Home"
         return render("/derived/pages/home.mako")
 
     def contact(self):
-        return render('/derived/pages/contact.mako')
+        c.title = "Contact"
+        return render("/derived/pages/contact.mako")
+
+    def about(self):
+        c.title = "About"
+        return render("/derived/pages/about.mako")
