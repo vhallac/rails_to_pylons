@@ -1,4 +1,7 @@
 from sample_app.tests import *
+from mock import patch
+
+from sample_app.lib.base import render
 
 class TestPagesController(TestController):
     # A little constant to reduce repetition in the test cases below
@@ -16,13 +19,6 @@ class TestPagesController(TestController):
         response = self.app.get(url(controller='pages', action='about'))
         assert have_tag(response, "title", self.title_prefix+"About")
 
-    def test_templates(self):
-        tests = [
-            { "url": "/",              "template": "/derived/pages/home.mako"},
-            { "url": "/contact", "template": "/derived/pages/contact.mako"},
-            { "url": "/about",   "template": "/derived/pages/about.mako"},
-            { "url": "/help",    "template": "/derived/pages/help.mako"},
-            ]
-        for i in tests:
-            f = self.make_template_checker("pages", i["url"], i["template"])
-            f(self)
+    def test_about(self):
+        response = self.app.get(url(controller='pages', action='help'))
+        assert have_tag(response, "title", self.title_prefix+"Help")

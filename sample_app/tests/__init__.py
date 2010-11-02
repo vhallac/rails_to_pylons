@@ -19,41 +19,27 @@ from mock import Mock, patch
 
 import pylons.test
 
-__all__ = ['environ', 'url', 'TestController', 'have_tag']
+__all__ = ['environ', 'url', 'TestController', 'TestSite', 'have_tag']
 
 # Invoke websetup with the current config file
 SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
 
 environ = {}
 
-class TestController(TestCase):
+class WebTest(TestCase):
 
     def __init__(self, *args, **kwargs):
         wsgiapp = pylons.test.pylonsapp
         config = wsgiapp.config
-        self.app = TestApp(wsgiapp)
         url._push_object(URLGenerator(config['routes.map'], environ))
+        self.app = TestApp(wsgiapp)
         TestCase.__init__(self, *args, **kwargs)
 
-    def make_template_checker(self, controller, url, template):
-        """Make a function that will load the specified URL, and check if it
-        renders the given URL.
+class TestController(WebTest):
+    pass
 
-        Arguments:
-        - `controller`: The module name of the controller that contains the
-          'render' function.
-        - `url`: The url to check
-        - `template`: The template file that should be rendered. It is relative
-          to the tempates directory (e.g. /derived/pages/home.mako)
-        """
-
-        @patch("sample_app.controllers."+controller+".render")
-        def test_func(self, mock):
-            mock.return_value = ""
-            r = self.app.get(url)
-            mock.assert_called_with(template)
-
-        return test_func
+class TestSite(WebTest):
+    pass
 
 import re
 
