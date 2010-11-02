@@ -19,7 +19,7 @@ from mock import Mock, patch
 
 import pylons.test
 
-__all__ = ['environ', 'url', 'TestController']
+__all__ = ['environ', 'url', 'TestController', 'have_tag']
 
 # Invoke websetup with the current config file
 SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
@@ -54,3 +54,7 @@ class TestController(TestCase):
             mock.assert_called_with(template)
 
         return test_func
+
+def have_tag(response, tag, content):
+    elt = response.html.find(tag)
+    return elt is not None and elt.encodeContents() == content

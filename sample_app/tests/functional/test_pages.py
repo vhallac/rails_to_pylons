@@ -1,11 +1,4 @@
-#TODO: Is this overkill?
-from BeautifulSoup import BeautifulSoup
 from sample_app.tests import *
-
-def have_tag(response, tag, content):
-    soup = BeautifulSoup(response.body)
-    elt = soup.find(tag)
-    return elt is not None and elt.encodeContents() == content
 
 class TestPagesController(TestController):
     # A little constant to reduce repetition in the test cases below
