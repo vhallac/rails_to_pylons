@@ -7,4 +7,4 @@
   sample application.
 </p>
 
-${h.link_to("Sign up now!", "#", class_="signup_button round")}
+${h.link_to("Sign up now!", h.url('signup'), class_="signup_button round")}

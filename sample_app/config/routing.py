@@ -20,9 +20,10 @@ def make_map(config):
 
     # CUSTOM ROUTES HERE
     map.connect('home', '/', controller='pages', action='home')
-    map.connect('about', '/about',   controller='pages', action='about')
+    map.connect('about', '/about', controller='pages', action='about')
     map.connect('contact', '/contact', controller='pages', action='contact')
-    map.connect('help', '/help',    controller='pages', action='help')
+    map.connect('help', '/help', controller='pages', action='help')
+    map.connect('signup', '/signup', controller='users', action='new')
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')

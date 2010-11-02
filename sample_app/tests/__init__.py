@@ -55,6 +55,8 @@ class TestController(TestCase):
 
         return test_func
 
+import re
+
 def have_tag(response, tag, content):
     elt = response.html.find(tag)
-    return elt is not None and elt.encodeContents() == content
+    return elt is not None and re.compile(content).search(elt.encodeContents())
