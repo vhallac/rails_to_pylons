@@ -15,6 +15,8 @@ from pylons import url
 from routes.util import URLGenerator
 from webtest import TestApp
 
+from mock import Mock, patch
+
 import pylons.test
 
 __all__ = ['environ', 'url', 'TestController']
@@ -32,3 +34,23 @@ class TestController(TestCase):
         self.app = TestApp(wsgiapp)
         url._push_object(URLGenerator(config['routes.map'], environ))
         TestCase.__init__(self, *args, **kwargs)
+
+    def make_template_checker(self, controller, url, template):
+        """Make a function that will load the specified URL, and check if it
+        renders the given URL.
+
+        Arguments:
+        - `controller`: The module name of the controller that contains the
+          'render' function.
+        - `url`: The url to check
+        - `template`: The template file that should be rendered. It is relative
+          to the tempates directory (e.g. /derived/pages/home.mako)
+        """
+
+        @patch("sample_app.controllers."+controller+".render")
+        def test_func(self, mock):
+            mock.return_value = ""
+            r = self.app.get(url)
+            mock.assert_called_with(template)
+
+        return test_func

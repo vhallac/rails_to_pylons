@@ -20,3 +20,7 @@ class PagesController(BaseController):
     def about(self):
         c.title = "About"
         return render("/derived/pages/about.mako")
+
+    def help(self):
+        c.title = "Help"
+        return render("/derived/pages/help.mako")
