@@ -11,7 +11,7 @@ from pylons import tmpl_context as c
 
 def title():
     base_title = "Ruby on Rails Tutorial Sample App"
-    if c.title is None:
+    if "title" not in dir(c) or c.title is None:
         return base_title
     else:
         return "%s | %s"%(base_title, c.title)

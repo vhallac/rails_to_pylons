@@ -24,6 +24,9 @@ def make_map(config):
     map.connect('contact', '/contact', controller='pages', action='contact')
     map.connect('help', '/help', controller='pages', action='help')
     map.connect('signup', '/signup', controller='users', action='new')
+    map.resource("user", "users",
+                 collection_actions = ['index'],
+                 member_actions = ['show', 'new'])
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
