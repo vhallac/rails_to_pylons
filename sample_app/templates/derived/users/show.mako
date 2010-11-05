@@ -1,3 +1,6 @@
 <%inherit file="/base/application.mako" />
 
-${c.user.name}: ${c.user.email}
+<h2>
+  ${h.gravatar_img(c.user.email)}
+  ${escape(c.user.name)}
+</h2>

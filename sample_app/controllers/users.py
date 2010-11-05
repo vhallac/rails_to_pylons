@@ -16,4 +16,5 @@ class UsersController(BaseController):
 
     def show(self, id, format='html'):
         c.user = model.Session.query(model.User).filter(model.User.id == id).first()
+        c.title = c.user.name
         return render('/derived/users/show.mako')

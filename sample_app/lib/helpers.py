@@ -6,7 +6,7 @@ available to Controllers. This module is available to templates as 'h'.
 # Import helpers as desired, or define your own, ie:
 from webhelpers.html.tags import stylesheet_link, image, link_to
 from pylons import url
-
+import gravatar
 from pylons import tmpl_context as c
 
 def title():
@@ -15,3 +15,6 @@ def title():
         return base_title
     else:
         return "%s | %s"%(base_title, c.title)
+
+def gravatar_img(email):
+    return image(gravatar.make(email), "gravatar", class_="gravatar")

@@ -15,8 +15,13 @@ setup(
     install_requires=[
         "Pylons>=1.0",
         "SQLAlchemy>=0.5",
+        "gravatar>=0.1",
     ],
     setup_requires=["PasteScript>=1.6.3"],
+    tests_require=[
+        "factory-boy>=1.0.0",
+        "mock>=0.7.0b3",
+    ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
     test_suite='nose.collector',

@@ -51,6 +51,11 @@ class TestModel(WebTest):
 
 import re
 
-def have_tag(response, tag, content):
-    elt = response.html.find(tag)
-    return elt is not None and re.compile(content).search(elt.encodeContents())
+def have_tag(response, tag, content="", **attrs):
+    elt = response.html.find(tag, **attrs)
+    if elt is None:
+        return False
+    if content is not None or len(content)>0:
+        if not re.compile(content).search(elt.encodeContents()):
+            return False
+    return True
