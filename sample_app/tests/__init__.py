@@ -14,12 +14,12 @@ from paste.script.appinstall import SetupCommand
 from pylons import url
 from routes.util import URLGenerator
 from webtest import TestApp
-
-from mock import Mock, patch
+from sample_app.model import Session
+from sample_app.model.meta import Base
 
 import pylons.test
 
-__all__ = ['environ', 'url', 'TestController', 'TestSite', 'have_tag']
+__all__ = ['environ', 'url', 'TestController', 'TestSite', 'TestModel', 'have_tag']
 
 # Invoke websetup with the current config file
 SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
@@ -35,10 +35,18 @@ class WebTest(TestCase):
         self.app = TestApp(wsgiapp)
         TestCase.__init__(self, *args, **kwargs)
 
+    @classmethod
+    def clean_db(self):
+        Base.metadata.drop_all(bind=Session.bind)
+        Base.metadata.create_all(bind=Session.bind)
+
 class TestController(WebTest):
     pass
 
 class TestSite(WebTest):
+    pass
+
+class TestModel(WebTest):
     pass
 
 import re
