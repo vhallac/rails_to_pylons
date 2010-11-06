@@ -1,19 +1,21 @@
-This file is for you to describe the sample_app application. Typically
-you would include information such as the information below:
+This is a re-implementation of the Ruby on Rails tutorial in pylons.
 
-Installation and Setup
-======================
+I've tried to stay as close to the applicaiton for Rails, but in some instances this was not possible. The areas that require more works are:
 
-Install ``sample_app`` using easy_install::
+- Model level validations: The model, its renderer and validators are tightly
+  coupled in Rails. This is not the case for Pylons. I will revisit this after
+  the initial port is done.
 
-    easy_install sample_app
+- The model doesn't keep the clear text password at all. As sson as it is set or
+  changed, it is hashed.
 
-Make a config file as follows::
+- Form error rendering: It may be possible to generate a for with error messages
+  that look very similar to the rails application, but it would require a lot of
+  work - and maybe experimenting with alternate form rendering/validating
+  libraries. I will leave this as is for now.
 
-    paster make-config sample_app config.ini
+- Logging? No idea where/how things are logged in pylons. Need to stop passwords
+  from being printed to the log files if it happens.
 
-Tweak the config file as appropriate and then setup the application::
 
-    paster setup-app config.ini
-
-Then you are ready to go.
+Progress: Finished Chapter 7

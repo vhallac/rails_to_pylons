@@ -1,19 +1,11 @@
 from sample_app.tests import *
+from sample_app.model import Session, User
 from mock import Mock, patch
 from sample_app.tests.factories import UserFactory
 import re
+from urlparse import urlparse
 
 class TestUsersController(TestController):
-
-    def test_index(self):
-        response = self.app.get(url(controller='users', action='new'))
-        assert have_tag(response, "title", "Sign up")
-
-    @classmethod
-    def setupClass(cls):
-        cls.clean_db()
-        cls.user = UserFactory.create()
-        cls.queryMock = Mock()
 
     @patch("sample_app.controllers.users.render")
     def test_templates(self, mock):
@@ -24,6 +16,13 @@ class TestUsersController(TestController):
         for i in tests:
             r = self.app.get(i["url"])
             mock.assert_called_with(i["template"])
+
+class TestUsersController_Show(TestController):
+    @classmethod
+    def setupClass(cls):
+        cls.clean_db()
+        cls.user = UserFactory.create()
+        cls.queryMock = Mock()
 
     def test_show(self):
         self.app.get(url(controller='users', action='show', id=self.user.id))
@@ -44,3 +43,36 @@ class TestUsersController(TestController):
         # selectors.
         # For now, checking for the img tag should be enough
         assert have_tag(response, "img", attrs={"class": "gravatar"})
+
+class TestUsersController_New(TestController):
+    @classmethod
+    def setUpClass(cls):
+        cls.clean_db()
+        cls.a_baduser = dict(name="",
+                             email="",
+                             password="",
+                             password_confirmation="")
+
+        cls.a_user = dict(name="user",
+                          email="user@example.com",
+                          password="foobar",
+                          password_confirmation="foobar")
+
+    def test_presence(self):
+        self.app.get(url(controller="users", action="new"))
+
+    def test_title(self):
+        response = self.app.get(url(controller='users', action='new'))
+        assert have_tag(response, "title", "Sign up")
+
+    @patch("sample_app.controllers.users.render")
+    def test_failure(self, mock):
+        mock.return_value = ""
+        response = self.app.post(url(controller='users', action='create'), params=self.a_baduser)
+        mock.assert_called_with("/derived/users/new.mako")
+
+    def test_success(self):
+        response = self.app.post(url(controller='users', action='create'), params=self.a_user)
+        u=Session.query(User).filter(User.email==self.a_user["email"]).first()
+        assert response.status_int == 302, response.status
+        assert urlparse(response.response.location).path == url('user', id=u.id)

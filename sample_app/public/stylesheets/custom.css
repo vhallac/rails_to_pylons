@@ -140,6 +140,7 @@ div.field, div.actions {
   margin-bottom: 10px;
 }
 
+/*
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
@@ -178,6 +179,16 @@ div.field, div.actions {
 #errorExplanation ul li {
   font-size: 12px;
   list-style: square;
+}
+*/
+
+/* TODO: Try to make it look like the rails page */
+.error-message {
+  margin-top: 0.5em;
+  padding: 2px;
+  background-color: red;
+  display: table;
+  color: #fff;
 }
 
 /* User list style */
