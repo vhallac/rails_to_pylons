@@ -9,6 +9,7 @@ from formencode import htmlfill
 from sqlalchemy.exc import DatabaseError
 
 from sample_app.lib.base import BaseController, render
+from sample_app.lib import local_validators
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,8 @@ class SignupForm(formencode.Schema):
     name = formencode.validators.String(not_empty = True, max = 50)
     password = formencode.validators.String(min = 6, max = 40)
     password_confirmation = formencode.validators.String() # No additional constaints for this. Gotta be equal to password anyway.
-    email = formencode.validators.Email(not_empty = True)
+    email = formencode.All(formencode.validators.Email(not_empty = True),
+                           local_validators.Unique(orm_class = model.User, filter_column='email'))
     chained_validators = [
         formencode.validators.FieldsMatch('password', 'password_confirmation'),
         ]
@@ -44,8 +46,10 @@ class UsersController(BaseController):
             response.status_int = 302
             response.headers['location'] = url('user', id=user.id)
         except DatabaseError, e:
-            # Todo populate the form with data
-            return htmlfill.render(render('/derived/users/new.mako'))
+            # TODO: How should we handle this? The only exceptions I can think
+            # of are broken DB operations, now that we handle unique e-mails in
+            # the form validator. Maybe display an error page?
+            return self.new()
 
     def show(self, id, format='html'):
         c.user = model.Session.query(model.User).filter(model.User.id == id).first()
