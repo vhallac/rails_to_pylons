@@ -8,6 +8,7 @@ import formencode
 from formencode import htmlfill
 from sqlalchemy.exc import DatabaseError
 
+from sample_app.lib import helpers as h
 from sample_app.lib.base import BaseController, render
 from sample_app.lib import local_validators
 
@@ -43,6 +44,7 @@ class UsersController(BaseController):
                               self.form_result["password"])
             model.Session.add(user)
             model.Session.commit()
+            h.flash("Welcome to the Sample App!", "success")
             response.status_int = 302
             response.headers['location'] = url('user', id=user.id)
         except DatabaseError, e:

@@ -9,6 +9,10 @@
     <div class="container">
       ${header.body()}
       <div id="content" class="round">
+        <% messages = h.flash.pop_messages() %>
+        % for msg in messages or []:
+          <div class="flash ${msg.category}">${msg}</div>
+        % endfor
         ${self.body()}
       </div>
       ${footer.body()}
@@ -19,3 +23,6 @@
 <%namespace name="stylesheets" file="/layouts/stylesheets.mako" />
 <%namespace name="header" file="/layouts/header.mako" />
 <%namespace name="footer" file="/layouts/footer.mako" />
+
+<%def name="show_flash()">
+</%def>

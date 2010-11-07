@@ -5,9 +5,12 @@ available to Controllers. This module is available to templates as 'h'.
 """
 # Import helpers as desired, or define your own, ie:
 from webhelpers.html.tags import *
+from webhelpers.pylonslib.flash import Flash as _Flash
 from pylons import url
 import gravatar
 from pylons import tmpl_context as c
+
+flash = _Flash()
 
 def title():
     base_title = "Ruby on Rails Tutorial Sample App"

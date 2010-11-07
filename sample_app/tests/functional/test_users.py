@@ -76,3 +76,6 @@ class TestUsersController_New(TestController):
         u=Session.query(User).filter(User.email==self.a_user["email"]).first()
         assert response.status_int == 302, response.status
         assert urlparse(response.response.location).path == url('user', id=u.id)
+        assert response.session.has_key("flash")
+        msg = response.session["flash"]
+        assert re.search("welcome to the sample app", msg[0][1], re.I)
