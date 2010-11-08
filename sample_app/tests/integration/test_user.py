@@ -3,7 +3,7 @@ from sample_app.lib.base import render
 from sample_app.model import Session, User
 from mock import patch
 
-class TestUser_Signup(TestSite):
+class TestUser_Signup(TestIntegration):
     @classmethod
     def setUpClass(cls):
         cls.clean_db()

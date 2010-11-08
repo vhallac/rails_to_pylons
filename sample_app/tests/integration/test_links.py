@@ -2,7 +2,7 @@ from sample_app.tests import *
 from sample_app.lib.base import render
 from mock import patch
 
-class TestIntegration(TestSite):
+class TestLinks(TestIntegration):
 
     @patch("sample_app.controllers.pages.render")
     def test_templates(self, mock):

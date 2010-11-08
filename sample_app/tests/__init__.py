@@ -19,7 +19,9 @@ from sample_app.model.meta import Base
 
 import pylons.test
 
-__all__ = ['environ', 'url', 'TestController', 'TestSite', 'TestModel', 'have_tag']
+__all__ = ['environ', 'url',
+           'TestController', 'TestIntegration', 'TestModel',
+           'have_tag']
 
 # Invoke websetup with the current config file
 SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
@@ -43,7 +45,7 @@ class WebTest(TestCase):
 class TestController(WebTest):
     pass
 
-class TestSite(WebTest):
+class TestIntegration(WebTest):
     pass
 
 class TestModel(WebTest):
