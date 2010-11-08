@@ -6,16 +6,19 @@ I've tried to stay as close to the applicaiton for Rails, but in some instances 
   coupled in Rails. This is not the case for Pylons. I will revisit this after
   the initial port is done.
 
-- The model doesn't keep the clear text password at all. As sson as it is set or
+- The model doesn't keep the clear text password at all. As soon as it is set or
   changed, it is hashed.
 
-- Form error rendering: It may be possible to generate a for with error messages
-  that look very similar to the rails application, but it would require a lot of
-  work - and maybe experimenting with alternate form rendering/validating
-  libraries. I will leave this as is for now.
+- Form error rendering: It may be possible to generate a form with error
+  messages that look very similar to the rails application, but it would require
+  a lot of work - and maybe experimenting with alternate form
+  rendering/validating libraries. I will leave this as is for now.
 
 - Logging? No idea where/how things are logged in pylons. Need to stop passwords
   from being printed to the log files if it happens.
 
+- Testing: Is there a better way to handle the Rails' renders_template() check
+  than using mock objects? The current solution requires the test case to
+  specify the controller that will handle the request under test.
 
-Progress: Finished Chapter 7
+Progress: Finished Chapter 8
